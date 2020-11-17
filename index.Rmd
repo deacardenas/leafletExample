@@ -1,25 +1,23 @@
 ---
-title: "Leaflet Map Example"
+title: "Biggest Cities in México by Population"
 author: "Andrea Cárdenas"
 date: "17/11/2020"
-output: ioslides_presentation
+output: html_document
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = FALSE)
+knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## Slide with R Output
-
-```{r cars, echo = TRUE}
-library(leaflet)
-set.seed(2016-04-25)
-df <- data.frame(lat = runif(20, min = 39.2, max = 39.3),
-                 lng = runif(20, min = -76.6, max = -76.5))
+```{r, echo=FALSE}
+suppressWarnings(suppressMessages(library(leaflet)))
+df <- read.csv("ciudades.csv")
+df$popup <- paste(sep = "<br/>",df$ciudad,"Population:",df$pobChar)
+pal <- colorNumeric(c("#2c7bb6", "#abd9e9", "#ffffbf", "#fdae61", "#d7191c"), c(800000,20120000))
 df %>% 
     leaflet() %>%
     addTiles() %>%
-    addMarkers()
+    addCircleMarkers(lng = df$long, lat = df$lat,
+                 color = ~pal(df$pob), popup = df$popup, label = df$ciudad, radius = ~sqrt(df$pob)*0.01) %>%
+    addLegend('topright', pal = pal, values = df$pob, title = 'Population', opacity = 1)
 ```
-
-
