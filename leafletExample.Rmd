@@ -1,0 +1,25 @@
+---
+title: "Leaflet Map Example"
+author: "Andrea Cárdenas"
+date: "17/11/2020"
+output: ioslides_presentation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+## Slide with R Output
+
+```{r cars, echo = TRUE}
+library(leaflet)
+set.seed(2016-04-25)
+df <- data.frame(lat = runif(20, min = 39.2, max = 39.3),
+                 lng = runif(20, min = -76.6, max = -76.5))
+df %>% 
+    leaflet() %>%
+    addTiles() %>%
+    addMarkers()
+```
+
+
